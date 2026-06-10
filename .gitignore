@@ -1,0 +1,39 @@
+# Unity 官方推荐配置
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+
+# 内存捕获文件
+MemoryCaptures/
+
+# VS 相关文件
+.vs/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.pidb.meta
+*.svd
+*.svd.meta
+
+# VS Code 个人配置
+.vscode/
+
+# Plastic SCM 缓存
+.plastic/
+ignore.conf
+
+# 编辑器崩溃日志 (仅根目录)
+/Editor/
+
+# 资源商店缓存
+/Assets/AssetStoreTools*
