@@ -8,7 +8,7 @@ public class EndMenu : MonoBehaviour
     // 重新开始 — 回到主菜单（场景索引 0）
     public void RestartGame()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadSceneAsync(0);
     }
 
     // 退出游戏
