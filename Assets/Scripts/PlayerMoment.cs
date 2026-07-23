@@ -5,7 +5,11 @@ using UnityEngine;
 
 public class PlayerMoment : MonoBehaviour
 {
+    public float JumpAddition = 1.5f;
+    public float FallAddition = 3.5f;
+    public ParticleSystem MoveParticle;
     private Rigidbody2D rb;
+
     private SpriteRenderer sprite;
     private Animator anim;
     private BoxCollider2D coll;
@@ -14,6 +18,9 @@ public class PlayerMoment : MonoBehaviour
     private float dirX = 0f;
     [SerializeField] private LayerMask jumpableGround;
     private int extraJumps;
+    private int JumpCount;
+    private bool JumpHold;
+   
     [SerializeField] private int extraJumpsValue = 1;
     //这个就是我在unity里面设置的一个变量，jumpableGround是一个LayerMask类型的变量，
     // LayerMask就是一个用来判断某个物体是否在某个层级上的工具，这个变量就是用来判断玩家是否在地面上的
@@ -34,7 +41,9 @@ public class PlayerMoment : MonoBehaviour
         anim = GetComponent<Animator>();
         coll = GetComponent<BoxCollider2D>();
         extraJumps = extraJumpsValue;
+        JumpCount = 0;
     }
+    
 
     // Update is called once per frame
     private void Update()
@@ -42,23 +51,46 @@ public class PlayerMoment : MonoBehaviour
         dirX = Input.GetAxisRaw("Horizontal");
         rb.velocity = new Vector2(dirX*moveSpeed,rb.velocity.y);
         
-        if (Input.GetButtonDown("Jump"))
+         if (Input.GetButtonDown("Jump"))
         {
             if (IsGrounded())
             {
                 JumpSoundEffect.Play();
                 rb.velocity = new Vector2(rb.velocity.x, FirstjumpForce);
                 extraJumps = extraJumpsValue;
+                JumpCount = 1;
             }
             else if (extraJumps > 0)
             {
                 JumpSoundEffect.Play();
                 rb.velocity = new Vector2(rb.velocity.x, SecondjumpForce);
                 extraJumps--;
+                JumpCount = 2;
             }
+        }
+        if (IsGrounded())
+        {
+            
+            JumpCount = 0;
         }
         updateAnimationstate();
     }
+    public void ParticlePlay()
+    {
+        if (IsGrounded()&&dirX != 0f)
+        {
+            if (!MoveParticle.isPlaying)
+            {
+                MoveParticle.Play();
+            }
+            
+        }else if(!IsGrounded())
+        {
+            MoveParticle.Stop();
+        }
+        
+    }
+   
     private void updateAnimationstate()
     {
         MovementState state;
@@ -66,12 +98,13 @@ public class PlayerMoment : MonoBehaviour
         {
             state = MovementState.running;
             sprite.flipX = false;
+            ParticlePlay();
         }
         else if (dirX < 0f)
         {
             state = MovementState.running;
-    
             sprite.flipX = true;
+            ParticlePlay();
         }
         else
         {
@@ -86,7 +119,7 @@ public class PlayerMoment : MonoBehaviour
         {
             state = MovementState.falling;
         }
-        else if(rb.velocity.y > .1f && extraJumps == 0)
+        else if(rb.velocity.y != 0 && extraJumps == 0 && JumpCount == 2)
         {
             state = MovementState.doubleJumping;
         }
