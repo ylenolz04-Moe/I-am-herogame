@@ -44,6 +44,7 @@ public class PlayerMoment : MonoBehaviour
         JumpCount = 0;
     }
     
+    #region Update
 
     // Update is called once per frame
     private void Update()
@@ -75,6 +76,7 @@ public class PlayerMoment : MonoBehaviour
         }
         updateAnimationstate();
     }
+    #endregion
     public void ParticlePlay()
     {
         if (IsGrounded()&&dirX != 0f)
@@ -83,7 +85,7 @@ public class PlayerMoment : MonoBehaviour
             {
                 MoveParticle.Play();
             }
-            
+                        
         }else if(!IsGrounded())
         {
             MoveParticle.Stop();
