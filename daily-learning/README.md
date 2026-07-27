@@ -25,6 +25,7 @@
 | 2026-07-21 | 观察者模式 | C# · Unity · 设计模式 · 事件驱动 · EventBus · UnityEvent | [📂](./2026-07-21/) |
 | 2026-07-21 | Git 日常开发工作流 | Git · GitHub · 版本控制 | [📄](./2026-07-21/GitWorkflow.md) |
 | 2026-07-24 | 树形结构入门 + C# 结构体入门 | C# · Unity · 数据结构 · 二叉树 · struct · 值类型 | [📂](./2026-07-24/) |
+| 2026-07-27 | Dictionary 字典 + foreach 循环入门 | C# · Unity · Dictionary · foreach · KeyValuePair · 背包系统 | [📂](./2026-07-27/) |
 
 ---
 
