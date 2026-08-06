@@ -5,28 +5,37 @@ using UnityEngine;
 
 public class PlayerMoment : MonoBehaviour
 {
-    public float JumpAddition = 1.5f;
-    public float FallAddition = 3.5f;
+    [Header("跳跃手感")]
+    [Tooltip("下落时额外重力倍率。1=正常重力，3=三倍重力。越大落得越快")]
+    public float FallGravityMultiplier = 2.5f;
+    [Tooltip("最大下落速度上限，防止无限制加速")]
+    public float MaxFallSpeed = 20f;
+
     public ParticleSystem MoveParticle;
     private Rigidbody2D rb;
 
     private SpriteRenderer sprite;
     private Animator anim;
     private BoxCollider2D coll;
-    //这个是我在unity里面设置的一个变量
-    // 这些都是用来控制玩家的物理属性，动画属性和碰撞属性的
     private float dirX = 0f;
-    [SerializeField] private LayerMask jumpableGround;
+    
     private int extraJumps;
     private int JumpCount;
     private bool JumpHold;
-   
+    public float JumpAddition=1.5f;
+    public float FallAddition=3.5f;
+    [SerializeField] private LayerMask jumpableGround;
+    [Header("土狼跳")]
+    [SerializeField] private float coyoteTime = 0.2f;//土狼时间：离开平台后仍可跳跃的宽恕时间
+    private float coyoteTimeCounter;//土狼时间计数器
+    [Header("拉墙跳")]
+    [SerializeField] private float wallJumpX;
+    [SerializeField] private float wallJumpY;
+
     [SerializeField] private int extraJumpsValue = 1;
-    //这个就是我在unity里面设置的一个变量，jumpableGround是一个LayerMask类型的变量，
-    // LayerMask就是一个用来判断某个物体是否在某个层级上的工具，这个变量就是用来判断玩家是否在地面上的
     [SerializeField] private float moveSpeed = 7f;
-    [SerializeField] private float FirstjumpForce = 7f;
-    [SerializeField] private float SecondjumpForce = 5f;
+    [SerializeField] private float FirstjumpForce = 10f;
+    [SerializeField] private float SecondjumpForce = 7f;
     [SerializeField] private AudioSource JumpSoundEffect;
     //serializefield有点像public，但是在unity编辑器里可以设置值，private则不行
     /// </summary>
@@ -50,14 +59,28 @@ public class PlayerMoment : MonoBehaviour
     private void Update()
     {
         dirX = Input.GetAxisRaw("Horizontal");
-        rb.velocity = new Vector2(dirX*moveSpeed,rb.velocity.y);
-        
-         if (Input.GetButtonDown("Jump"))
+        rb.velocity = new Vector2(dirX * moveSpeed, rb.velocity.y);
+        JumpHold = Input.GetButton("Jump");
+        // ★ 松手或下落时切换为高倍重力，自然减速无断层
+        if (rb.velocity.y < 0 || (rb.velocity.y > 0 && !Input.GetButton("Jump")))
+        {
+            rb.gravityScale = FallGravityMultiplier;
+        }
+        else
+        {
+            rb.gravityScale = 1f;
+        }
+
+        // ★ 限制最大下落速度，不会无限加速
+        rb.velocity = new Vector2(rb.velocity.x, Mathf.Clamp(rb.velocity.y, -MaxFallSpeed, MaxFallSpeed));
+
+        if (Input.GetButtonDown("Jump"))
         {
             if (IsGrounded())
             {
                 JumpSoundEffect.Play();
                 rb.velocity = new Vector2(rb.velocity.x, FirstjumpForce);
+                coyoteTimeCounter = coyoteTime;
                 extraJumps = extraJumpsValue;
                 JumpCount = 1;
             }
@@ -68,11 +91,19 @@ public class PlayerMoment : MonoBehaviour
                 extraJumps--;
                 JumpCount = 2;
             }
+            else if (coyoteTimeCounter > 0f)
+            {
+                JumpSoundEffect.Play();
+                rb.velocity = new Vector2(rb.velocity.x, FirstjumpForce);
+                coyoteTimeCounter = 0f;
+                extraJumps = extraJumpsValue;
+                JumpCount = 1;
+            }
         }
         if (IsGrounded())
         {
-            
             JumpCount = 0;
+            coyoteTimeCounter = 0f;
         }
         updateAnimationstate();
     }
