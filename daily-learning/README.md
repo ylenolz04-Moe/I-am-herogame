@@ -27,6 +27,7 @@
 | 2026-07-24 | 树形结构入门 + C# 结构体入门 | C# · Unity · 数据结构 · 二叉树 · struct · 值类型 | [📂](./2026-07-24/) |
 | 2026-07-27 | Dictionary 字典 + foreach 循环入门 | C# · Unity · Dictionary · foreach · KeyValuePair · 背包系统 | [📂](./2026-07-27/) |
 | 2026-08-05 | C# 委托与事件 — 从订阅通知到解耦架构 | C# · Unity · Delegate · Action · Func · Event · 事件驱动 · 解耦 | [📂](./2026-08-05/) |
+| 2026-08-09 | LINQ 入门 — 让集合操作像写SQL一样简单 | C# · Unity · LINQ · Lambda · Where · Select · 链式调用 | [📂](./2026-08-09/) |
 
 ---
 
@@ -40,6 +41,7 @@
 - [x] **Git 工作流** — 分支/提交/推送/PR/合并 核心流程 ✓
 - [ ] **Git Hooks** — 提交前自动检查
 - [x] **C# 委托与事件** — delegate · Action · Func · event · 事件驱动架构 ✓
+- [x] **C# LINQ 入门** — Where · Select · FirstOrDefault · Any/All · OrderBy · 链式调用 ✓
 
 ---
 
