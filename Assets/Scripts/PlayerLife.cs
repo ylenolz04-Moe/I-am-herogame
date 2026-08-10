@@ -17,6 +17,8 @@ public class PlayerLife : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Trap"))
