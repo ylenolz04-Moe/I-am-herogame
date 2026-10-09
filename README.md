@@ -8,7 +8,7 @@
 
 **I Am Hero** 是一款经典的 2D 平台跳跃游戏。玩家将操控一位像素英雄，穿越充满陷阱和障碍的关卡，收集樱桃🍒，最终抵达终点旗帜🚩。
 
-本项目是 "I am hero" 的**重制版（Remake）**，基于 Unity 2022.3.54f1 引擎，使用 **Pixel Adventure 1** 美术资源包，致力于打造流畅的平台跳跃体验。
+本项目是 "I am hero" 的**重制版（Remake）**，基于 Unity 2022.3.54f1 引擎，使用 **Pixel Adventure 1** 美术资源包。
 
 ---
 
@@ -141,6 +141,4 @@ I am hero_remake/
 
 本项目仅用于学习与个人开发用途。美术与音频资源的版权归原作者所有。
 
----
 
-*Made with ❤️ by [ylenolz04-Moe](https://github.com/ylenolz04-Moe)*
